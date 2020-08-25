@@ -42,58 +42,62 @@ public class LogicSimulator {
 
         List<Integer> input_ok_list = new ArrayList<Integer>(); //順序
 
-        // one_row 判斷input都有出來(用負號)
-        for(int i=0;i<string_line3_s.length;i++){
-            String[] s_split = string_line3_s[i].split(" ");
-            int count_m = 0;
-            for(int j=1; j< s_split.length-1 ;j++){
-                if (s_split[j].contains("-")){
-                    count_m += 1;
+        for(int ok=0;ok<gates_num;ok++){
+            // one_row 判斷input都有出來(用負號)
+            for(int i=0;i<string_line3_s.length;i++){
+                String[] s_split = string_line3_copy[i].split(" ");
+                int count_m = 0;
+                for(int j=1; j< s_split.length-1 ;j++){
+                    if (s_split[j].contains("-")){
+                        count_m += 1;
+                    }
+                }
+                if(count_m == s_split.length-2){
+                    input_ok_list.add(i);
                 }
             }
-            if(count_m == s_split.length-2){
-                input_ok_list.add(i);
+
+            // replace
+            int[] want_replace = new int[string_line3_copy.length];
+            for(int k =0;k<input_ok_list.size();k++){
+                int num = input_ok_list.get(k) + 1;
+                for(int i = 0;i<string_line3_copy.length;i++){
+                    String[] s_split = string_line3_s[i].split(" ");
+
+                    for(int j = 0;j<s_split.length;j++){
+                        if(s_split[j].charAt(0) == '-'){
+                            continue;
+                        }
+                        if(Integer.parseInt(String.valueOf(s_split[j].charAt(0))) == num){
+                            want_replace[i] = j;
+                        }
+
+                    }
+                }
             }
-        }
-        // replace
-        int[] want_replace = new int[string_line3_copy.length];
-        for(int k =0;k<input_ok_list.size();k++){
-            int num = input_ok_list.get(k) + 1;
             for(int i = 0;i<string_line3_copy.length;i++){
-                String[] s_split = string_line3_s[i].split(" ");
-
+                String[] s_split = string_line3_copy[i].split(" ");
+                if(want_replace[i] == 0){
+                    continue;
+                }
+                String temp_str = new String();
+                s_split[want_replace[i]] = s_split[want_replace[i]].replace(s_split[want_replace[i]].charAt(0), '-');
+                string_line3_copy[i] = "";
                 for(int j = 0;j<s_split.length;j++){
-                    if(s_split[j].charAt(0) == '-'){
-                        continue;
-                    }
-                    if(Integer.parseInt(String.valueOf(s_split[j].charAt(0))) == num){
-                        want_replace[i] = j;
-                    }
-
+                    string_line3_copy[i] += s_split[j];
+                    string_line3_copy[i] += " ";
                 }
             }
-        }
-        for(int i = 0;i<string_line3_copy.length;i++){
-            String[] s_split = string_line3_copy[i].split(" ");
-            if(want_replace[i] == 0){
-                continue;
+
+            for(int i = 0;i<string_line3_copy.length;i++){
+                System.out.println(string_line3_copy[i]);
             }
-            String temp_str = new String();
-            s_split[want_replace[i]] = s_split[want_replace[i]].replace(s_split[want_replace[i]].charAt(0), '-');
-            string_line3_copy[i] = "";
-            for(int j = 0;j<s_split.length;j++){
-                string_line3_copy[i] += s_split[j];
-                string_line3_copy[i] += " ";
+            for(int i = 0;i<input_ok_list.size();i++){
+                System.out.print(input_ok_list.get(i));
             }
+            System.out.println();
         }
 
-        for(int i = 0;i<string_line3_copy.length;i++){
-            System.out.println(string_line3_copy[i]);
-        }
-        for(int i = 0;i<input_ok_list.size();i++){
-            System.out.print(input_ok_list.get(i));
-        }
-        System.out.println();
 
         // 挑出input_ok的出來做
 

@@ -1,13 +1,18 @@
-public class GateAND extends Device{
-    private boolean inputValue;
+public class GateAND extends Device {
+    private boolean ANDValue;
+
     @Override
-    public void setInput(boolean value)
-    {
-        inputValue = value;
+    public void setInput(boolean value) {
+        ANDValue = value;
     }
+
     @Override
     public boolean getOutput()
     {
-        return this.iPins.get(0).getOutput() & this.iPins.get(1).getOutput();
+        boolean temp = this.iPins.get(0).getOutput();
+        for(int i = 0; i < iPins.size(); i++){
+            temp = temp & iPins.get(i).getOutput();
+        }
+            return temp;
     }
 }

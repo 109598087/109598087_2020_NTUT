@@ -85,11 +85,92 @@ public class DeviceTest
 
         assertEquals(false, gateAND.getOutput());
 
-    /* implement 0 AND 1 = 0,
-                 1 AND 0 = 0,
-                 1 AND 1 = 1 test */
+        // 0 AND 1
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(false);
+        iPin2.setInput(true);
+
+        gateAND = new GateAND();
+        gateAND.addInputPin(iPin1);
+        gateAND.addInputPin(iPin2);
+
+        assertEquals(false, gateAND.getOutput());
+        // 1 AND 0 = 0
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(true);
+        iPin2.setInput(false);
+
+        gateAND = new GateAND();
+        gateAND.addInputPin(iPin1);
+        gateAND.addInputPin(iPin2);
+
+        assertEquals(false, gateAND.getOutput());
+        // 1 AND 1 = 1
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(true);
+        iPin2.setInput(true);
+
+        gateAND = new GateAND();
+        gateAND.addInputPin(iPin1);
+        gateAND.addInputPin(iPin2);
+
+        assertEquals(true, gateAND.getOutput());
 
     }
+    @Test
+    public void testGateOR()
+    {
+        // 0 OR 0 = 0
+        IPin iPin1 = new IPin();
+        IPin iPin2 = new IPin();
+        iPin1.setInput(false);
+        iPin2.setInput(false);
+
+        GateOR gateOR = new GateOR();
+        gateOR.addInputPin(iPin1);
+        gateOR.addInputPin(iPin2);
+
+        assertEquals(false, gateOR.getOutput());
+
+        // 0 OR 1 = 1
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(false);
+        iPin2.setInput(true);
+
+        gateOR = new GateOR();
+        gateOR.addInputPin(iPin1);
+        gateOR.addInputPin(iPin2);
+
+        assertEquals(true, gateOR.getOutput());
+        // 1 OR 0 = 1
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(true);
+        iPin2.setInput(false);
+
+        gateOR = new GateOR();
+        gateOR.addInputPin(iPin1);
+        gateOR.addInputPin(iPin2);
+
+        assertEquals(true, gateOR.getOutput());
+        // 1 OR 1 = 1
+        iPin1 = new IPin();
+        iPin2 = new IPin();
+        iPin1.setInput(true);
+        iPin2.setInput(true);
+
+        gateOR = new GateOR();
+        gateOR.addInputPin(iPin1);
+        gateOR.addInputPin(iPin2);
+
+        assertEquals(true, gateOR.getOutput());
+
+    }
+
 
 
 

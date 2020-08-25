@@ -52,7 +52,16 @@ public class LogicSimulator {
                         count_m += 1;
                     }
                 }
-                if(count_m == s_split.length-2){
+                int remove_num = 0;
+                for(int j=0;j<input_ok_list.size();j++){
+                    if (input_ok_list.get(j) == i){
+                        remove_num = 1;
+                    }
+                }
+                if(remove_num==1){
+                    continue;
+                }
+                if(count_m == s_split.length-2){// if 重複 去掉
                     input_ok_list.add(i);
                 }
             }
@@ -93,7 +102,7 @@ public class LogicSimulator {
                 System.out.println(string_line3_copy[i]);
             }
             for(int i = 0;i<input_ok_list.size();i++){
-                System.out.print(input_ok_list.get(i));
+                System.out.print(input_ok_list.get(i)+1);
             }
             System.out.println();
         }

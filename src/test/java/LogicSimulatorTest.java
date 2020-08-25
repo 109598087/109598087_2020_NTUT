@@ -18,7 +18,7 @@ public class LogicSimulatorTest
     {
         LogicSimulator logicSimulator = new LogicSimulator();
 
-        logicSimulator.load(file1Path);
+        logicSimulator.load(file2Path);
         // 011
 //        Vector<Boolean> inputValues = new Vector<>();
 //        inputValues.add(false);

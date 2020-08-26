@@ -32,7 +32,8 @@ public class LogicSimulator {
         for(int i=0;i<string_line3_v.size();i++){
             string_line3_s[i] = (String)string_line3_v.get(i);
         }
-        String[] string_line3_copy = string_line3_s.clone();
+        String[] string_line3_copy = string_line3_s.clone();  // for order
+        String[] string_line3_copy2 = string_line3_s.clone(); // for connect
 
 
 
@@ -97,92 +98,58 @@ public class LogicSimulator {
                     string_line3_copy[i] += " ";
                 }
             }
-            System.out.println();
         }
         System.out.println("order:");
         for(int i = 0;i<input_ok_list.size();i++){
             System.out.print(input_ok_list.get(i)+1);
         }
         System.out.println();
+        //-----------------------------------------------------------------------
+        for(int i = 0;i<input_pins_num;i++){ //建立iPin
+            iPins.add(new IPin());
+        }
+        for(int i = 0;i<string_line3_s.length;i++) {//依照順序把gate放入circuits
+            String[] s_split = string_line3_s[input_ok_list.get(i)].split(" ");
+            switch (s_split[0]) {
+                case "1":
+                    GateAND gateAND = new GateAND();
+                    circuits.add(gateAND);
+                    break;
 
+                case "2":
+                    GateOR gateOR = new GateOR();
+                    circuits.add(gateOR);
+                    break;
 
-//        iPins.add(iPin1);
-        //switch (1:AND, 2: OR, 3: NOT) ok
-        //input_ok_list
-        //string_line3_s
-        //int input_pins_num = Integer.valueOf(string_line1);
-        //int gates_num = Integer.valueOf(string_line2);
-        boolean and_output, or_output, not_output;
+                case "3":
+                    GateNOT gateNOT = new GateNOT();
+                    circuits.add(gateNOT);
+                    break;
+
+            }
+        }
+        System.out.println(circuits.size());
         for(int i = 0;i<string_line3_s.length;i++){
             String[] s_split = string_line3_s[input_ok_list.get(i)].split(" ");
-            // 幾個iPin
-            for(int j=1;j<s_split.length-1;j++){
-                System.out.println(s_split[j]);
-                 if(s_split[j].charAt(0) == '-'){
-                      IPin iPin1 = new IPin();
-                 }
-//
-                // if 2.1:
-                    //iPin1.setInput()
-                IPin iPin1 = new IPin();
-                switch (s_split[0]){
-                    case "1":
-                        GateAND gateAND = new GateAND();
-                        gateAND.addInputPin(iPin1);
-                        and_output = gateAND.getOutput();
-
-                    case "2":
-                        GateOR gateOR = new GateOR();
-                        gateOR.addInputPin(iPin1);
-                        or_output = gateOR.getOutput();
-
-                    case "3":
-                        GateNOT gateNOT = new GateNOT();
-                        gateNOT.addInputPin(iPin1);
-                        not_output = gateNOT.getOutput();
-
+            for(int j = 1;j<s_split.length-1;j++){
+                if(s_split[j].charAt(0) == '-'){//讀取-號後面數字的意義
+                    int num = Integer.parseInt(String.valueOf(s_split[j].charAt(1)))-1; //負號後面的數字
+                    circuits.get(i).addInputPin(iPins.get(num));
+                }else {//2.1 3.1讀取數字的意義
+                    int num2 = Integer.parseInt(String.valueOf(s_split[j].charAt(0)))-1;
+                    System.out.print(num2);
+                    IPin iPin_temp = new IPin();
+                    iPin_temp.setInput(circuits.get(num2).getOutput());
+                    circuits.get(i).addInputPin(iPin_temp);
                 }
             }
-
-
+            System.out.println();
         }
-        IPin iPin1 = new IPin();
-        GateNOT gateNOT = new GateNOT();
-        gateNOT.addInputPin(iPin1);
-        gateNOT.getOutput();
+        for(int i=0;i<circuits.size();i++){
+            System.out.println(circuits.get(i));
+        }
 
 
-
-
-        // 挑出input_ok的出來做
-
-
-//        // 011
-//        IPin iPin1 = new IPin();
-//        IPin iPin2 = new IPin();
-//        IPin iPin3 = new IPin();
-//        iPin1.setInput(true);
-//        iPin2.setInput(true);
-//        iPin3.setInput(true);
-////        iPins.add(iPin1);
-////        iPins.add(iPin2);
-////        iPins.add(iPin3);
-//        GateAND gateAND = new GateAND();
-//        GateNOT gateNOT = new GateNOT();
-//        GateOR gateOR = new GateOR();
-//        gateNOT.addInputPin(iPin2);
-//        gateOR.addInputPin(iPin3);
-//        IPin iPin2_1 = new IPin();
-//        iPin2_1.setInput(gateNOT.getOutput());
-//        gateOR.addInputPin(iPin2_1);
-//
-//        IPin iPin3_1 = new IPin();
-//        iPin3_1.setInput(gateOR.getOutput());
-//
-//        gateAND.addInputPin(iPin1);
-//        gateAND.addInputPin(iPin2_1);
-//        gateAND.addInputPin(iPin3_1);
-//        assertEquals(false, gateAND.getOutput());
 
 
         return false;

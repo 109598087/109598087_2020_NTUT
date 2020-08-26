@@ -97,23 +97,64 @@ public class LogicSimulator {
                     string_line3_copy[i] += " ";
                 }
             }
-
-            for(int i = 0;i<string_line3_copy.length;i++){
-                System.out.println(string_line3_copy[i]);
-            }
-            for(int i = 0;i<input_ok_list.size();i++){
-                System.out.print(input_ok_list.get(i)+1);
-            }
             System.out.println();
         }
+        System.out.println("order:");
+        for(int i = 0;i<input_ok_list.size();i++){
+            System.out.print(input_ok_list.get(i)+1);
+        }
+        System.out.println();
+
+
+//        iPins.add(iPin1);
+        //switch (1:AND, 2: OR, 3: NOT) ok
+        //input_ok_list
+        //string_line3_s
+        //int input_pins_num = Integer.valueOf(string_line1);
+        //int gates_num = Integer.valueOf(string_line2);
+        boolean and_output, or_output, not_output;
+        for(int i = 0;i<string_line3_s.length;i++){
+            String[] s_split = string_line3_s[input_ok_list.get(i)].split(" ");
+            // 幾個iPin
+            for(int j=1;j<s_split.length-1;j++){
+                System.out.println(s_split[j]);
+                 if(s_split[j].charAt(0) == '-'){
+                      IPin iPin1 = new IPin();
+                 }
+//
+                // if 2.1:
+                    //iPin1.setInput()
+                IPin iPin1 = new IPin();
+                switch (s_split[0]){
+                    case "1":
+                        GateAND gateAND = new GateAND();
+                        gateAND.addInputPin(iPin1);
+                        and_output = gateAND.getOutput();
+
+                    case "2":
+                        GateOR gateOR = new GateOR();
+                        gateOR.addInputPin(iPin1);
+                        or_output = gateOR.getOutput();
+
+                    case "3":
+                        GateNOT gateNOT = new GateNOT();
+                        gateNOT.addInputPin(iPin1);
+                        not_output = gateNOT.getOutput();
+
+                }
+            }
+
+
+        }
+        IPin iPin1 = new IPin();
+        GateNOT gateNOT = new GateNOT();
+        gateNOT.addInputPin(iPin1);
+        gateNOT.getOutput();
+
+
 
 
         // 挑出input_ok的出來做
-
-
-
-
-
 
 
 //        // 011
@@ -130,9 +171,7 @@ public class LogicSimulator {
 //        GateNOT gateNOT = new GateNOT();
 //        GateOR gateOR = new GateOR();
 //        gateNOT.addInputPin(iPin2);
-//
 //        gateOR.addInputPin(iPin3);
-//
 //        IPin iPin2_1 = new IPin();
 //        iPin2_1.setInput(gateNOT.getOutput());
 //        gateOR.addInputPin(iPin2_1);

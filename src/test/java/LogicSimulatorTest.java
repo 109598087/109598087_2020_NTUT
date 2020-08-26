@@ -18,19 +18,22 @@ public class LogicSimulatorTest
     {
         LogicSimulator logicSimulator = new LogicSimulator();
 
-        logicSimulator.load(file1Path);
-        // 011
-//        Vector<Boolean> inputValues = new Vector<>();
-//        inputValues.add(false);
-//        inputValues.add(true);
-//        inputValues.add(true);
-//
-//
-//        assertEquals("Simulation Result:\n" +
-//                "i i i | o\n" +
-//                "1 2 3 | 1\n" +
-//                "------+--\n" +
-//                "0 1 1 | 0\n", logicSimulator.getSimulationResult(inputValues));
+
+        //011
+        Vector<Boolean> inputValues = new Vector<>();
+
+        inputValues.add(true);
+        inputValues.add(true);
+        inputValues.add(true);
+        logicSimulator.load(file2Path);
+
+
+
+        assertEquals("Simulation Result:\n" +
+                "i i i | o\n" +
+                "1 2 3 | 1\n" +
+                "------+--\n" +
+                "0 1 1 | 0\n", logicSimulator.getSimulationResult(inputValues));
     }
 
 }

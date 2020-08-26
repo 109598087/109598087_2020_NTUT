@@ -1,15 +1,12 @@
 public class GateOR extends Device{
-    private boolean ORValue;
-
-    @Override
-    public void setInput(boolean value) {
-        ORValue = value;
-    }
 
     @Override
     public boolean getOutput()
     {
-        boolean temp = this.iPins.get(0).getOutput();
+        boolean temp = false;
+        if (iPins.size() <=1){
+            return temp;
+        }
         for(int i = 0; i < iPins.size(); i++){
             temp = temp | iPins.get(i).getOutput();
         }

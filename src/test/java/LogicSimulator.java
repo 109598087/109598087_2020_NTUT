@@ -11,6 +11,7 @@ public class LogicSimulator {
     private Vector<Device> circuits;
     private Vector<Device> iPins;
     private Vector<Device> oPins;
+    private int end_num;
 
     public LogicSimulator() {
         circuits = new Vector<>();
@@ -99,15 +100,12 @@ public class LogicSimulator {
                 }
             }
         }
-        System.out.println("order:");
-        for(int i = 0;i<input_ok_list.size();i++){
-            System.out.print(input_ok_list.get(i)+1);
-        }
-        System.out.println();
+
         //-----------------------------------------------------------------------
         for(int i = 0;i<input_pins_num;i++){ //建立iPin
             iPins.add(new IPin());
         }
+
         for(int i = 0;i<string_line3_s.length;i++) {//依照順序把gate放入circuits
             String[] s_split = string_line3_s[input_ok_list.get(i)].split(" ");
             switch (s_split[0]) {
@@ -128,43 +126,43 @@ public class LogicSimulator {
 
             }
         }
-        System.out.println(circuits.size());
+
         for(int i = 0;i<string_line3_s.length;i++){
             String[] s_split = string_line3_s[input_ok_list.get(i)].split(" ");
             for(int j = 1;j<s_split.length-1;j++){
-                if(s_split[j].charAt(0) == '-'){//讀取-號後面數字的意義
+                if(s_split[j].charAt(0) == '-'){
                     int num = Integer.parseInt(String.valueOf(s_split[j].charAt(1)))-1; //負號後面的數字
                     circuits.get(i).addInputPin(iPins.get(num));
-                }else {//2.1 3.1讀取數字的意義
+
+                }else {
                     int num2 = Integer.parseInt(String.valueOf(s_split[j].charAt(0)))-1;
-                    System.out.print(num2);
-                    IPin iPin_temp = new IPin();
-                    iPin_temp.setInput(circuits.get(num2).getOutput());
-                    circuits.get(i).addInputPin(iPin_temp);
+                    Device d = new Device();
+                    // new if false true
+                    d = circuits.get(num2);
+                    circuits.get(i).addInputPin(d);
+
                 }
             }
-            System.out.println();
+
         }
-        for(int i=0;i<circuits.size();i++){
-            System.out.println(circuits.get(i));
-        }
-
-
-
 
         return false;
     }
-//    public String getSimulationResult(Vector<Boolean> inputValues)
-//    {
-//
-//        String simulation_result=
-//                "Simulation Result:\n" +
-//                "i i i | o\n" +
-//                "1 2 3 | 1\n" +
-//                "------+--\n" +
-//               inputValues.get(0).compareTo(false)+" "+inputValues.get(1).compareTo(false)+" "+inputValues.get(2).compareTo(false)+" | "
-//                ;
-//
-//        return simulation_result;
-//    }
+    public String getSimulationResult(Vector<Boolean> inputValues)
+    {
+        for(int i =0;i<iPins.size();i++){
+            iPins.get(i).setInput(inputValues.get(i));
+        }
+        end_num = 2;
+        System.out.println(circuits.get(end_num).getOutput());
+
+        String simulation_result=
+                "Simulation Result:\n" +
+                "i i i | o\n" +
+                "1 2 3 | 1\n" +
+                "------+--\n"
+                ;
+
+        return simulation_result;
+    }
 }

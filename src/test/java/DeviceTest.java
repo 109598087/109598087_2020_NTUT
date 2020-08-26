@@ -123,17 +123,20 @@ public class DeviceTest
     @Test
     public void testGateOR()
     {
-        // 0 OR 0 = 0
+        // 0 OR 0 1 = 0
         IPin iPin1 = new IPin();
         IPin iPin2 = new IPin();
         iPin1.setInput(false);
         iPin2.setInput(false);
+        IPin iPin3 = new IPin();
+        iPin3.setInput(true);
 
         GateOR gateOR = new GateOR();
         gateOR.addInputPin(iPin1);
         gateOR.addInputPin(iPin2);
+        gateOR.addInputPin(iPin3);
 
-        assertEquals(false, gateOR.getOutput());
+        assertEquals(true, gateOR.getOutput());
 
         // 0 OR 1 = 1
         iPin1 = new IPin();

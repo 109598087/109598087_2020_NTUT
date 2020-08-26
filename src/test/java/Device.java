@@ -11,7 +11,7 @@ public class Device {
     public void addInputPin(Device iPin)
     {
 
-        iPins.add(iPin);
+        this.iPins.add(iPin);
     }
 
     public void setInput(boolean value)
